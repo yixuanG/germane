@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "Germane",
+    "subtitle": "German Grammar Practice"
+  },
+  "nav": {
+    "home": "Home",
+    "practice": "Practice",
+    "mistakes": "Mistakes",
+    "vocabulary": "Vocabulary",
+    "settings": "Settings"
+  },
+  "common": {
+    "back": "Back",
+    "submit": "Submit",
+    "check": "Check",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "noData": "No data available"
+  },
+  "home": {
+    "welcome": "Welcome to Germane",
+    "description": "Practice German grammar offline with engaging exercises.",
+    "startPractice": "Start Practicing",
+    "viewMistakes": "View Mistakes"
+  },
+  "practice": {
+    "title": "Past Tense Practice",
+    "selectArticle": "Select an Article",
+    "difficulty": "Difficulty",
+    "submitArticle": "Submit Article",
+    "allCorrect": "Excellent! All answers are correct!",
+    "someMistakes": "You have some mistakes. Check your mistake notebook."
+  },
+  "mistakes": {
+    "title": "Mistake Notebook",
+    "noMistakes": "No mistakes yet. Keep practicing!",
+    "delete": "Delete",
+    "markReviewed": "Mark as Reviewed",
+    "infinitive": "Infinitive",
+    "correctForm": "Correct Form",
+    "sentence": "Sentence",
+    "article": "Article"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "selectLanguage": "Select Language",
+    "english": "English",
+    "german": "German",
+    "chinese": "简体中文"
+  }
+}

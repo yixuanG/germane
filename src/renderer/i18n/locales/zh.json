@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "Germane",
+    "subtitle": "德语语法练习"
+  },
+  "nav": {
+    "home": "首页",
+    "practice": "练习",
+    "mistakes": "错题本",
+    "vocabulary": "词汇",
+    "settings": "设置"
+  },
+  "common": {
+    "back": "返回",
+    "submit": "提交",
+    "check": "检查",
+    "next": "下一个",
+    "previous": "上一个",
+    "loading": "加载中...",
+    "noData": "暂无数据"
+  },
+  "home": {
+    "welcome": "欢迎使用 Germane",
+    "description": "通过有趣的练习离线学习德语语法。",
+    "startPractice": "开始练习",
+    "viewMistakes": "查看错题"
+  },
+  "practice": {
+    "title": "过去时练习",
+    "selectArticle": "选择一篇文章",
+    "difficulty": "难度",
+    "submitArticle": "提交文章",
+    "allCorrect": "太棒了！所有答案都正确！",
+    "someMistakes": "你有一些错误。请查看错题本。"
+  },
+  "mistakes": {
+    "title": "错题本",
+    "noMistakes": "还没有错题。继续练习！",
+    "delete": "删除",
+    "markReviewed": "标记为已复习",
+    "infinitive": "原形",
+    "correctForm": "正确形式",
+    "sentence": "句子",
+    "article": "文章"
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "selectLanguage": "选择语言",
+    "english": "英语",
+    "german": "德语",
+    "chinese": "简体中文"
+  }
+}

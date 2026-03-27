@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "Germane",
+    "subtitle": "Deutsche Grammatik üben"
+  },
+  "nav": {
+    "home": "Startseite",
+    "practice": "Üben",
+    "mistakes": "Fehler",
+    "vocabulary": "Vokabeln",
+    "settings": "Einstellungen"
+  },
+  "common": {
+    "back": "Zurück",
+    "submit": "Absenden",
+    "check": "Prüfen",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "loading": "Laden...",
+    "noData": "Keine Daten verfügbar"
+  },
+  "home": {
+    "welcome": "Willkommen bei Germane",
+    "description": "Übe deutsche Grammatik offline mit spannenden Übungen.",
+    "startPractice": "Mit dem Üben beginnen",
+    "viewMistakes": "Fehler ansehen"
+  },
+  "practice": {
+    "title": "Vergangenheitszeit Übung",
+    "selectArticle": "Wähle einen Artikel",
+    "difficulty": "Schwierigkeitsgrad",
+    "submitArticle": "Artikel absenden",
+    "allCorrect": "Perfekt! Alle Antworten sind richtig!",
+    "someMistakes": "Du hast einige Fehler. Schau in dein Fehlerheft."
+  },
+  "mistakes": {
+    "title": "Fehlerheft",
+    "noMistakes": "Noch keine Fehler. Weiter üben!",
+    "delete": "Löschen",
+    "markReviewed": "Als gelernt markieren",
+    "infinitive": "Infinitiv",
+    "correctForm": "Korrekte Form",
+    "sentence": "Satz",
+    "article": "Artikel"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "selectLanguage": "Sprache wählen",
+    "english": "Englisch",
+    "german": "Deutsch",
+    "chinese": "简体中文"
+  }
+}
