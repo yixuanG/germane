@@ -16,7 +16,7 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
   disabled = false,
 }) => {
   return (
-    <span className="leading-relaxed">
+    <span className="leading-[2.25]">
       {sentence.parts.map((part, index) => {
         if (part.type === 'text') {
           return <span key={`text-${index}`}>{part.content}</span>

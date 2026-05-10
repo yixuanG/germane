@@ -17,24 +17,29 @@ const Settings: React.FC = () => {
   ]
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('settings.title')}</h1>
+    <div className="px-8 py-10 max-w-3xl mx-auto">
+      <div className="mb-8">
+        <p className="mb-3 text-sm font-mono uppercase tracking-[0.22em] text-accent-violet">
+          Preferences
+        </p>
+        <h1 className="text-5xl font-bold tracking-[-0.055em] text-primary">{t('settings.title')}</h1>
+      </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>{t('settings.language')}</CardTitle>
+          <CardTitle className="text-3xl">{t('settings.language')}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-600 mb-4">{t('settings.selectLanguage')}</p>
+          <p className="text-secondary mb-5 text-lg">{t('settings.selectLanguage')}</p>
           <div className="flex flex-wrap gap-3">
             {languages.map((lang) => (
               <button
                 key={lang.code}
                 onClick={() => changeLanguage(lang.code)}
-                className={`px-4 py-2 rounded-lg border transition-colors ${
+                className={`px-4 py-2 rounded-xl border font-medium transition-all ${
                   i18n.language === lang.code
-                    ? 'bg-gray-900 text-white border-gray-900'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    ? 'bg-accent-green text-canvas border-accent-green shadow-glow'
+                    : 'bg-surface text-secondary border-line hover:bg-elevated hover:text-primary'
                 }`}
               >
                 {lang.name}

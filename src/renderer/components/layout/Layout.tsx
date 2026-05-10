@@ -5,7 +5,7 @@ import Sidebar from './Sidebar'
 
 const Layout: React.FC = () => {
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
+    <div className="h-screen flex flex-col immersive-bg text-primary">
       <TitleBar />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />

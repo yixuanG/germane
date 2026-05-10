@@ -20,11 +20,16 @@ const MistakeNotebook: React.FC = () => {
 
   if (mistakes.length === 0) {
     return (
-      <div className="p-8 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('mistakes.title')}</h1>
+      <div className="px-8 py-10 max-w-5xl mx-auto">
+        <div className="mb-8">
+          <p className="mb-3 text-sm font-mono uppercase tracking-[0.22em] text-feedback-warning">
+            Review Queue
+          </p>
+          <h1 className="text-5xl font-bold tracking-[-0.055em] text-primary">{t('mistakes.title')}</h1>
+        </div>
         <Card>
           <CardContent className="py-12 text-center">
-            <p className="text-gray-500 text-lg">{t('mistakes.noMistakes')}</p>
+            <p className="text-secondary text-lg">{t('mistakes.noMistakes')}</p>
           </CardContent>
         </Card>
       </div>
@@ -32,21 +37,26 @@ const MistakeNotebook: React.FC = () => {
   }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('mistakes.title')}</h1>
+    <div className="px-8 py-10 max-w-5xl mx-auto">
+      <div className="mb-8">
+        <p className="mb-3 text-sm font-mono uppercase tracking-[0.22em] text-feedback-warning">
+          Review Queue
+        </p>
+        <h1 className="text-5xl font-bold tracking-[-0.055em] text-primary">{t('mistakes.title')}</h1>
+      </div>
 
       {unreviewedMistakes.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-xl font-semibold text-primary mb-4">
             To Review ({unreviewedMistakes.length})
           </h2>
           <div className="space-y-4">
             {unreviewedMistakes.map((mistake) => (
-              <Card key={mistake.id}>
+              <Card key={mistake.id} className="border-feedback-warning/15">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2">
-                      <BookOpen className="w-5 h-5 text-gray-500" />
+                      <BookOpen className="w-5 h-5 text-feedback-warning" />
                       <CardTitle className="text-lg">{mistake.articleTitle}</CardTitle>
                     </div>
                     <div className="flex gap-2">
@@ -62,7 +72,7 @@ const MistakeNotebook: React.FC = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => deleteMistake(mistake.id)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-feedback-error hover:text-feedback-error"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>
@@ -70,15 +80,15 @@ const MistakeNotebook: React.FC = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 mb-4 italic">"{mistake.sentence}"</p>
+                  <p className="text-secondary mb-4 italic font-serif text-lg leading-8">"{mistake.sentence}"</p>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <span className="text-sm text-gray-500">{t('mistakes.infinitive')}:</span>
-                      <p className="font-medium">{mistake.infinitive}</p>
+                      <span className="text-sm text-muted">{t('mistakes.infinitive')}:</span>
+                      <p className="font-mono font-medium text-primary">{mistake.infinitive}</p>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-500">{t('mistakes.correctForm')}:</span>
-                      <p className="font-medium text-green-700">{mistake.correctForm}</p>
+                      <span className="text-sm text-muted">{t('mistakes.correctForm')}:</span>
+                      <p className="font-mono font-medium text-feedback-success">{mistake.correctForm}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -90,33 +100,33 @@ const MistakeNotebook: React.FC = () => {
 
       {reviewedMistakes.length > 0 && (
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-xl font-semibold text-primary mb-4">
             Reviewed ({reviewedMistakes.length})
           </h2>
           <div className="space-y-3 opacity-75">
             {reviewedMistakes.map((mistake) => (
-              <Card key={mistake.id} className="bg-gray-50">
+              <Card key={mistake.id} className="bg-surface/55">
                 <CardHeader className="pb-2">
                   <div className="flex items-start justify-between">
-                    <CardTitle className="text-base text-gray-600">
+                    <CardTitle className="text-base text-secondary">
                       {mistake.articleTitle}
                     </CardTitle>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => deleteMistake(mistake.id)}
-                      className="text-gray-400 hover:text-red-600"
+                      className="text-muted hover:text-feedback-error"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
                 </CardHeader>
                 <CardContent className="pb-4">
-                  <p className="text-gray-600 text-sm">{mistake.sentence}</p>
+                  <p className="text-secondary text-sm">{mistake.sentence}</p>
                   <div className="flex gap-4 mt-2 text-sm">
-                    <span className="text-gray-500">{mistake.infinitive}</span>
-                    <span className="text-gray-400">→</span>
-                    <span className="text-green-600">{mistake.correctForm}</span>
+                    <span className="text-muted font-mono">{mistake.infinitive}</span>
+                    <span className="text-muted">→</span>
+                    <span className="text-feedback-success font-mono">{mistake.correctForm}</span>
                   </div>
                 </CardContent>
               </Card>

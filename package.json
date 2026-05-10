@@ -1,6 +1,6 @@
 {
   "name": "germane",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "description": "Modern desktop app for practicing German grammar",
   "main": "dist/main/index.js",
   "type": "module",

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { BookOpen } from 'lucide-react'
+import { ArrowRight, BookOpen, Database } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useAppStore } from '@/stores/useAppStore'
@@ -25,55 +25,81 @@ const ArticleList: React.FC = () => {
   }
 
   const difficultyColors: Record<string, string> = {
-    A2: 'bg-blue-100 text-blue-800',
-    B1: 'bg-purple-100 text-purple-800',
+    A2: 'border-accent-cyan/25 bg-accent-cyan/10 text-accent-cyan',
+    B1: 'border-accent-violet/25 bg-accent-violet/10 text-accent-violet',
+    B2: 'border-accent-green/25 bg-accent-green/10 text-accent-green',
   }
 
   if (isLoading) {
     return (
       <div className="p-8 flex items-center justify-center">
-        <p>{t('common.loading')}</p>
+        <p className="text-secondary">{t('common.loading')}</p>
       </div>
     )
   }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">{t('practice.selectArticle')}</h1>
+    <div className="px-8 py-10 max-w-5xl mx-auto">
+      <div className="flex items-end justify-between gap-6 mb-8">
+        <div>
+          <p className="mb-3 text-sm font-mono uppercase tracking-[0.22em] text-accent-cyan">
+            Practice Library
+          </p>
+          <h1 className="text-5xl font-bold tracking-[-0.055em] text-primary">
+            {t('practice.selectArticle')}
+          </h1>
+          <p className="mt-4 max-w-xl text-lg leading-8 text-secondary">
+            Choose a focused text and complete each cloze without unnecessary distraction.
+          </p>
+        </div>
         {articles.length === 0 && (
-          <Button onClick={handleSeedDatabase}>Load Sample Articles</Button>
+          <Button onClick={handleSeedDatabase}>
+            <Database className="w-4 h-4" />
+            Load Sample Articles
+          </Button>
         )}
       </div>
 
       {articles.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 mb-4">{t('common.noData')}</p>
-          <Button onClick={handleSeedDatabase}>Load Sample Articles</Button>
-        </div>
+        <Card className="border-dashed">
+          <div className="text-center py-16 px-6">
+            <p className="text-secondary mb-5 text-lg">{t('common.noData')}</p>
+            <Button onClick={handleSeedDatabase}>
+              <Database className="w-4 h-4" />
+              Load Sample Articles
+            </Button>
+          </div>
+        </Card>
       ) : (
         <div className="grid gap-4">
           {articles.map((article) => (
             <Card
               key={article.id}
-              className="hover:shadow-md transition-shadow cursor-pointer"
+              className="group cursor-pointer overflow-hidden transition-all hover:-translate-y-0.5 hover:border-accent-green/20 hover:bg-elevated"
               onClick={() => navigate(`/practice/${article.id}`)}
             >
-              <CardHeader className="flex flex-row items-start justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-gray-500" />
-                    {article.title}
-                  </CardTitle>
-                  <CardDescription>{article.topic}</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between gap-5">
+                <div className="flex items-start gap-4">
+                  <div className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-line bg-white/[0.03]">
+                    <BookOpen className="w-5 h-5 text-accent-green" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-2xl">
+                      {article.title}
+                    </CardTitle>
+                    <CardDescription className="mt-2 text-base">{article.topic}</CardDescription>
+                  </div>
                 </div>
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    difficultyColors[article.difficulty] || 'bg-gray-100 text-gray-800'
-                  }`}
-                >
-                  {article.difficulty}
-                </span>
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`rounded-full border px-3 py-1 text-sm font-mono font-medium ${
+                      difficultyColors[article.difficulty] || 'border-line bg-white/[0.03] text-secondary'
+                    }`}
+                  >
+                    {article.difficulty}
+                  </span>
+                  <ArrowRight className="w-5 h-5 text-muted transition-all group-hover:translate-x-1 group-hover:text-accent-green" />
+                </div>
               </CardHeader>
             </Card>
           ))}

@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "practice": "Practice",
+    "translation": "Translation",
     "mistakes": "Mistakes",
     "vocabulary": "Vocabulary",
     "settings": "Settings"
@@ -32,6 +33,26 @@
     "submitArticle": "Submit Article",
     "allCorrect": "Excellent! All answers are correct!",
     "someMistakes": "You have some mistakes. Check your mistake notebook."
+  },
+  "translationPractice": {
+    "title": "Paragraph Translation Practice",
+    "kicker": "Writing Exam Session",
+    "sessionKicker": "Translation Session",
+    "description": "Translate compact arguments for TestDaF and Goethe writing tasks. Each topic contains pro, con, and balanced viewpoints with C1 and C2 German references after submission.",
+    "homeDescription": "Train exam-ready argumentative paragraphs for TestDaF and Goethe writing with C1/C2 reference translations.",
+    "start": "Start Translation",
+    "viewpoints": "viewpoints",
+    "notFound": "Translation topic not found.",
+    "inputPlaceholder": "Write your German paragraph translation here...",
+    "submit": "Reveal C1/C2 References",
+    "shortcutSubmit": "submit",
+    "shortcutNext": "next paragraph",
+    "shortcutBack": "back",
+    "stance": {
+      "pro": "Pro",
+      "con": "Con",
+      "balanced": "Balanced"
+    }
   },
   "mistakes": {
     "title": "Mistake Notebook",

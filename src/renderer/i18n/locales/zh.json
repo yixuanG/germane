@@ -6,6 +6,7 @@
   "nav": {
     "home": "首页",
     "practice": "练习",
+    "translation": "翻译",
     "mistakes": "错题本",
     "vocabulary": "词汇",
     "settings": "设置"
@@ -32,6 +33,26 @@
     "submitArticle": "提交文章",
     "allCorrect": "太棒了！所有答案都正确！",
     "someMistakes": "你有一些错误。请查看错题本。"
+  },
+  "translationPractice": {
+    "title": "段落翻译练习",
+    "kicker": "写作考试 Session",
+    "sessionKicker": "翻译 Session",
+    "description": "面向 TestDaF 和 Goethe 写作任务训练紧凑论证段落。每个话题包含正方、反方和平衡观点，提交后展示 C1 与 C2 德语参考译文。",
+    "homeDescription": "训练 TestDaF 与 Goethe 写作所需的论证段落翻译，并在提交后对照 C1/C2 参考译文。",
+    "start": "开始翻译",
+    "viewpoints": "个观点",
+    "notFound": "未找到翻译话题。",
+    "inputPlaceholder": "在这里写下你的德语段落翻译...",
+    "submit": "显示 C1/C2 参考译文",
+    "shortcutSubmit": "提交",
+    "shortcutNext": "下一段",
+    "shortcutBack": "返回",
+    "stance": {
+      "pro": "正方",
+      "con": "反方",
+      "balanced": "平衡"
+    }
   },
   "mistakes": {
     "title": "错题本",

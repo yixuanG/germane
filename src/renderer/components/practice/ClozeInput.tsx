@@ -20,6 +20,7 @@ const ClozeInput: React.FC<ClozeInputProps> = ({
 }) => {
   const [value, setValue] = useState('')
   const [isCorrect, setIsCorrect] = useState(false)
+  const [hasTried, setHasTried] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const playDingSound = () => {
@@ -44,17 +45,37 @@ const ClozeInput: React.FC<ClozeInputProps> = ({
     }
   }
 
+  const focusNextInput = () => {
+    const inputs = Array.from(
+      document.querySelectorAll<HTMLInputElement>('input[data-cloze-input="true"]:not(:disabled)')
+    )
+    const currentIndex = inputs.findIndex((input) => input === inputRef.current)
+    const nextInput = inputs[currentIndex + 1]
+    nextInput?.focus()
+    nextInput?.select()
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isCorrect) return
 
     const newValue = e.target.value
     setValue(newValue)
+    setHasTried(false)
     onChange?.(id, newValue)
 
     if (newValue === correctAnswer) {
       setIsCorrect(true)
       playDingSound()
       onCorrect(id)
+      window.setTimeout(focusNextInput, 80)
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      setHasTried(true)
+      focusNextInput()
     }
   }
 
@@ -64,22 +85,38 @@ const ClozeInput: React.FC<ClozeInputProps> = ({
     }
   }, [isCorrect, disabled])
 
+  const normalizedValue = value.trim().toLocaleLowerCase()
+  const normalizedAnswer = correctAnswer.toLocaleLowerCase()
+  const isOffTrack = normalizedValue.length > 0 && !normalizedAnswer.startsWith(normalizedValue)
+  const hasError = !isCorrect && normalizedValue.length > 0 && (hasTried || isOffTrack)
+
   return (
-    <span className="inline-block mx-1">
+    <span className="relative inline-flex mx-1 align-baseline">
       <input
         ref={inputRef}
         type="text"
+        data-cloze-input="true"
         value={isCorrect ? correctAnswer : value}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onBlur={() => setHasTried(true)}
         disabled={isCorrect || disabled}
+        aria-invalid={hasError}
         className={clsx(
-          'inline-block px-2 py-1 border-b-2 text-center min-w-[80px] transition-all',
+          'inline-block min-w-[8.5rem] rounded-2xl border px-4 py-2 text-center font-mono text-xl leading-none transition-all duration-200 focus:outline-none focus:ring-2',
           isCorrect
-            ? 'bg-green-100 border-green-500 text-green-800 font-medium'
-            : 'bg-white border-gray-300 focus:border-blue-500 focus:outline-none text-gray-900'
+            ? 'border-accent-green/70 bg-accent-green/15 text-accent-green shadow-glow animate-soft-pop'
+            : hasError
+            ? 'border-feedback-error/70 bg-feedback-error/10 text-primary focus:ring-feedback-error/35'
+            : 'border-line bg-elevated text-primary placeholder:text-muted focus:border-accent-cyan/60 focus:ring-accent-cyan/25'
         )}
         placeholder={`(${infinitive})`}
       />
+      {hasError && (
+        <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-mono text-feedback-error">
+          check form
+        </span>
+      )}
     </span>
   )
 }

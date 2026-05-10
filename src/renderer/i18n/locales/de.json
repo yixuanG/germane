@@ -6,6 +6,7 @@
   "nav": {
     "home": "Startseite",
     "practice": "Üben",
+    "translation": "Übersetzen",
     "mistakes": "Fehler",
     "vocabulary": "Vokabeln",
     "settings": "Einstellungen"
@@ -32,6 +33,26 @@
     "submitArticle": "Artikel absenden",
     "allCorrect": "Perfekt! Alle Antworten sind richtig!",
     "someMistakes": "Du hast einige Fehler. Schau in dein Fehlerheft."
+  },
+  "translationPractice": {
+    "title": "Absatzübersetzung üben",
+    "kicker": "Schreibprüfung Session",
+    "sessionKicker": "Übersetzungssession",
+    "description": "Übersetze kompakte Argumente für TestDaF- und Goethe-Schreibaufgaben. Jedes Thema enthält Pro-, Kontra- und abwägende Positionen mit C1- und C2-Referenzen nach dem Absenden.",
+    "homeDescription": "Trainiere prüfungsnahe argumentative Absätze für TestDaF und Goethe mit C1/C2-Referenzübersetzungen.",
+    "start": "Übersetzung starten",
+    "viewpoints": "Positionen",
+    "notFound": "Übersetzungsthema nicht gefunden.",
+    "inputPlaceholder": "Schreibe hier deine deutsche Absatzübersetzung...",
+    "submit": "C1/C2-Referenzen anzeigen",
+    "shortcutSubmit": "absenden",
+    "shortcutNext": "nächster Absatz",
+    "shortcutBack": "zurück",
+    "stance": {
+      "pro": "Pro",
+      "con": "Kontra",
+      "balanced": "Abwägend"
+    }
   },
   "mistakes": {
     "title": "Fehlerheft",

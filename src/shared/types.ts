@@ -1,7 +1,7 @@
 export interface Article {
   id: string;
   title: string;
-  difficulty: 'A2' | 'B1';
+  difficulty: 'A2' | 'B1' | 'B2';
   topic: string;
   paragraphs: Paragraph[];
 }
@@ -46,4 +46,33 @@ export interface MistakeRecord {
 export interface DatabaseSchema {
   articles: Article[];
   mistakes: MistakeRecord[];
+}
+
+export type SupportedLanguage = 'en' | 'de' | 'zh';
+
+export interface LocalizedText {
+  en: string;
+  de: string;
+  zh: string;
+}
+
+export type TranslationStance = 'pro' | 'con' | 'balanced';
+
+export interface TranslationPrompt {
+  id: string;
+  stance: TranslationStance;
+  label: LocalizedText;
+  source: LocalizedText;
+  references: {
+    c1: string;
+    c2: string;
+  };
+}
+
+export interface TranslationTopic {
+  id: string;
+  title: LocalizedText;
+  examFocus: string[];
+  description: LocalizedText;
+  prompts: TranslationPrompt[];
 }

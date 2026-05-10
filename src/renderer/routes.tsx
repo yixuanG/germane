@@ -3,6 +3,8 @@ import Layout from '@/components/layout/Layout'
 import Home from '@/pages/Home'
 import ArticleList from '@/pages/ArticleList'
 import Practice from '@/pages/Practice'
+import TranslationTopicList from '@/pages/TranslationTopicList'
+import TranslationPractice from '@/pages/TranslationPractice'
 import MistakeNotebook from '@/pages/MistakeNotebook'
 import Vocabulary from '@/pages/Vocabulary'
 import Settings from '@/pages/Settings'
@@ -23,6 +25,14 @@ export const router = createHashRouter([
       {
         path: 'practice/:id',
         element: <Practice />,
+      },
+      {
+        path: 'translation',
+        element: <TranslationTopicList />,
+      },
+      {
+        path: 'translation/:id',
+        element: <TranslationPractice />,
       },
       {
         path: 'mistakes',

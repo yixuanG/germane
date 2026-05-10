@@ -21,31 +21,31 @@ const TitleBar: React.FC = () => {
   }
 
   return (
-    <div className="h-12 bg-gray-100 border-b border-gray-200 flex items-center justify-between drag-region select-none">
+    <div className="h-12 bg-canvas/80 border-b border-line flex items-center justify-between drag-region select-none backdrop-blur-2xl">
       <div className="flex items-center px-4">
-        <span className="font-semibold text-gray-700">Germane</span>
+        <span className="font-semibold text-secondary">Germane</span>
       </div>
       <div className="flex items-center no-drag-region">
         <button
           onClick={handleMinimize}
-          className="w-12 h-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+          className="w-12 h-full flex items-center justify-center hover:bg-white/[0.04] transition-colors"
           aria-label="Minimize"
         >
-          <Minus className="w-4 h-4 text-gray-600" />
+          <Minus className="w-4 h-4 text-secondary" />
         </button>
         <button
           onClick={handleMaximize}
-          className="w-12 h-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+          className="w-12 h-full flex items-center justify-center hover:bg-white/[0.04] transition-colors"
           aria-label="Maximize"
         >
-          <Square className="w-4 h-4 text-gray-600" />
+          <Square className="w-4 h-4 text-secondary" />
         </button>
         <button
           onClick={handleClose}
-          className="w-12 h-full flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors"
+          className="w-12 h-full flex items-center justify-center hover:bg-feedback-error/90 transition-colors"
           aria-label="Close"
         >
-          <X className="w-4 h-4 text-gray-600 hover:text-white" />
+          <X className="w-4 h-4 text-secondary" />
         </button>
       </div>
     </div>
