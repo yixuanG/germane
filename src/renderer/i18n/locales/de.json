@@ -7,6 +7,7 @@
     "home": "Startseite",
     "practice": "Üben",
     "translation": "Übersetzen",
+    "prepositions": "Präpositionen",
     "mistakes": "Fehler",
     "vocabulary": "Vokabeln",
     "settings": "Einstellungen"
@@ -52,6 +53,34 @@
       "pro": "Pro",
       "con": "Kontra",
       "balanced": "Abwägend"
+    }
+  },
+  "prepositionPractice": {
+    "title": "Präpositionen im Text üben",
+    "kicker": "Präpositionstraining",
+    "sessionKicker": "Präpositionensession",
+    "description": "Übe Verb-Präposition-Verbindungen, lokale Präpositionen und Nomen-Präposition-Kombinationen in kurzen erwachsenen Texten. Wenn der Kasus wichtig ist, schreibst du Präposition und Artikel.",
+    "homeDescription": "Trainiere Präpositionen mit Erzählungen, Erklärtexten und kurzen Argumentationen.",
+    "notFound": "Präpositionstext nicht gefunden.",
+    "submit": "Antworten anzeigen",
+    "touched": "begonnen",
+    "readyTitle": "Alle Lücken sind richtig.",
+    "readyDescription": "Drücke ⌘/Ctrl Enter, um den Text abzuschließen.",
+    "allCorrect": "Sehr gut! Alle Präpositionen passen.",
+    "revealed": "Antworten angezeigt",
+    "revealedDescription": "Nicht gelöste Lücken zeigen jetzt die erwartete Präpositionalgruppe.",
+    "shortcutSubmit": "absenden",
+    "shortcutNext": "nächste Lücke",
+    "shortcutBack": "zurück",
+    "kind": {
+      "narrative": "Erzählend",
+      "expository": "Erklärend",
+      "argumentative": "Argumentativ"
+    },
+    "category": {
+      "verb": "Verb + Präposition",
+      "location": "Ort und Richtung",
+      "noun": "Nomen + Präposition"
     }
   },
   "mistakes": {

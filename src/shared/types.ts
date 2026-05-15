@@ -76,3 +76,39 @@ export interface TranslationTopic {
   description: LocalizedText;
   prompts: TranslationPrompt[];
 }
+
+export type PrepositionCategory = 'verb' | 'location' | 'noun';
+
+export type PrepositionTextKind = 'narrative' | 'expository' | 'argumentative';
+
+export interface PrepositionStory {
+  id: string;
+  title: string;
+  level: 'A2-B1' | 'B1' | 'B1-B2' | 'B2';
+  kind: PrepositionTextKind;
+  description: string;
+  focus: PrepositionCategory[];
+  paragraphs: PrepositionParagraph[];
+}
+
+export interface PrepositionParagraph {
+  id: string;
+  parts: PrepositionPart[];
+}
+
+export type PrepositionPart = PrepositionTextPart | PrepositionBlankPart;
+
+export interface PrepositionTextPart {
+  type: 'text';
+  content: string;
+}
+
+export interface PrepositionBlankPart {
+  type: 'blank';
+  id: string;
+  category: PrepositionCategory;
+  answer: string;
+  acceptedAnswers?: string[];
+  hint: string;
+  explanation?: string;
+}

@@ -7,6 +7,7 @@
     "home": "Home",
     "practice": "Practice",
     "translation": "Translation",
+    "prepositions": "Prepositions",
     "mistakes": "Mistakes",
     "vocabulary": "Vocabulary",
     "settings": "Settings"
@@ -52,6 +53,34 @@
       "pro": "Pro",
       "con": "Con",
       "balanced": "Balanced"
+    }
+  },
+  "prepositionPractice": {
+    "title": "Preposition Story Practice",
+    "kicker": "Preposition Lab",
+    "sessionKicker": "Preposition Session",
+    "description": "Practice verb-preposition patterns, location prepositions, and noun-preposition combinations inside short adult texts. When case matters, type the preposition with the article.",
+    "homeDescription": "Train prepositions through compact stories, essays, and explanatory texts.",
+    "notFound": "Preposition text not found.",
+    "submit": "Reveal Answers",
+    "touched": "started",
+    "readyTitle": "Every blank is locked in.",
+    "readyDescription": "Press ⌘/Ctrl Enter to finish the text.",
+    "allCorrect": "Excellent! Every preposition fits.",
+    "revealed": "Answers revealed",
+    "revealedDescription": "Missed blanks now show the expected preposition phrase.",
+    "shortcutSubmit": "submit",
+    "shortcutNext": "next blank",
+    "shortcutBack": "back",
+    "kind": {
+      "narrative": "Narrative",
+      "expository": "Expository",
+      "argumentative": "Argumentative"
+    },
+    "category": {
+      "verb": "Verb + preposition",
+      "location": "Place and direction",
+      "noun": "Noun + preposition"
     }
   },
   "mistakes": {

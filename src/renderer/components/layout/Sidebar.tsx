@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { BookOpen, FileText, AlertCircle, BookMarked, Settings, Sparkles, Languages } from 'lucide-react'
+import { BookOpen, FileText, AlertCircle, BookMarked, Settings, Sparkles, Languages, MapPinned } from 'lucide-react'
 
 const Sidebar: React.FC = () => {
   const { t } = useTranslation()
@@ -10,6 +10,7 @@ const Sidebar: React.FC = () => {
     { to: '/', icon: BookOpen, label: t('nav.home') },
     { to: '/practice', icon: FileText, label: t('nav.practice') },
     { to: '/translation', icon: Languages, label: t('nav.translation') },
+    { to: '/prepositions', icon: MapPinned, label: t('nav.prepositions') },
     { to: '/mistakes', icon: AlertCircle, label: t('nav.mistakes') },
     { to: '/vocabulary', icon: BookMarked, label: t('nav.vocabulary'), disabled: true },
     { to: '/settings', icon: Settings, label: t('nav.settings') },

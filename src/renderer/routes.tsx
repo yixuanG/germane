@@ -5,6 +5,8 @@ import ArticleList from '@/pages/ArticleList'
 import Practice from '@/pages/Practice'
 import TranslationTopicList from '@/pages/TranslationTopicList'
 import TranslationPractice from '@/pages/TranslationPractice'
+import PrepositionStoryList from '@/pages/PrepositionStoryList'
+import PrepositionPractice from '@/pages/PrepositionPractice'
 import MistakeNotebook from '@/pages/MistakeNotebook'
 import Vocabulary from '@/pages/Vocabulary'
 import Settings from '@/pages/Settings'
@@ -33,6 +35,14 @@ export const router = createHashRouter([
       {
         path: 'translation/:id',
         element: <TranslationPractice />,
+      },
+      {
+        path: 'prepositions',
+        element: <PrepositionStoryList />,
+      },
+      {
+        path: 'prepositions/:id',
+        element: <PrepositionPractice />,
       },
       {
         path: 'mistakes',

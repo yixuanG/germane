@@ -7,6 +7,7 @@
     "home": "首页",
     "practice": "练习",
     "translation": "翻译",
+    "prepositions": "介词",
     "mistakes": "错题本",
     "vocabulary": "词汇",
     "settings": "设置"
@@ -52,6 +53,34 @@
       "pro": "正方",
       "con": "反方",
       "balanced": "平衡"
+    }
+  },
+  "prepositionPractice": {
+    "title": "介词篇章练习",
+    "kicker": "介词训练",
+    "sessionKicker": "介词 Session",
+    "description": "在较短的成熟文本中练习动介搭配、方位介词和名介组合。只要涉及格变化，就需要输入介词和冠词。",
+    "homeDescription": "用故事、议论文和说明文训练介词搭配与格变化。",
+    "notFound": "未找到介词练习文本。",
+    "submit": "显示答案",
+    "touched": "已作答",
+    "readyTitle": "所有空都已答对。",
+    "readyDescription": "按 ⌘/Ctrl Enter 完成这篇练习。",
+    "allCorrect": "太棒了！所有介词都正确。",
+    "revealed": "已显示答案",
+    "revealedDescription": "未答对的空现在会显示标准介词短语。",
+    "shortcutSubmit": "提交",
+    "shortcutNext": "下一空",
+    "shortcutBack": "返回",
+    "kind": {
+      "narrative": "叙事",
+      "expository": "说明",
+      "argumentative": "议论"
+    },
+    "category": {
+      "verb": "动介搭配",
+      "location": "方位与方向",
+      "noun": "名介组合"
     }
   },
   "mistakes": {

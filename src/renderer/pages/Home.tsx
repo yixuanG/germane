@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, BookOpen, AlertCircle, Keyboard, Target, Languages } from 'lucide-react'
+import { ArrowRight, BookOpen, AlertCircle, Keyboard, Target, Languages, MapPinned } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -71,7 +71,24 @@ const Home: React.FC = () => {
           </Card>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
+        <div className="mt-5 grid gap-5 lg:grid-cols-3">
+          <Card
+            className="cursor-pointer transition-all hover:border-accent-cyan/30 hover:bg-elevated"
+            onClick={() => navigate('/prepositions')}
+          >
+            <CardHeader className="flex flex-row items-center gap-4">
+              <div className="p-3 bg-accent-cyan/10 rounded-2xl border border-accent-cyan/20">
+                <MapPinned className="w-7 h-7 text-accent-cyan" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl">{t('prepositionPractice.title')}</CardTitle>
+                <p className="mt-2 text-secondary">
+                  {t('prepositionPractice.homeDescription')}
+                </p>
+              </div>
+            </CardHeader>
+          </Card>
+
           <Card
             className="cursor-pointer transition-all hover:border-feedback-warning/30 hover:bg-elevated"
             onClick={() => navigate('/mistakes')}
