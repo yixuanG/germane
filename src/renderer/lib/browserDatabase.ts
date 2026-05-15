@@ -1,4 +1,4 @@
-import type { Article, MistakeRecord } from '@shared/types'
+import type { Article, MistakeRecord, PracticeAttempt } from '@shared/types'
 
 const seedArticles: Article[] = [
   {
@@ -1943,16 +1943,23 @@ const STORAGE_KEY = 'germane-db'
 interface DatabaseData {
   articles: Article[]
   mistakes: MistakeRecord[]
+  attempts: PracticeAttempt[]
 }
 
 function getDb(): DatabaseData {
   const data = localStorage.getItem(STORAGE_KEY)
   if (data) {
-    return JSON.parse(data)
+    const parsed = JSON.parse(data) as Partial<DatabaseData>
+    return {
+      articles: parsed.articles || [],
+      mistakes: parsed.mistakes || [],
+      attempts: parsed.attempts || [],
+    }
   }
   return {
     articles: seedArticles as Article[],
     mistakes: [],
+    attempts: [],
   }
 }
 
@@ -2015,6 +2022,17 @@ export const browserDb = {
     if (mistake) {
       mistake.reviewedAt = Date.now()
     }
+    saveDb(db)
+  },
+
+  getAttempts: async (): Promise<PracticeAttempt[]> => {
+    return getDb().attempts || []
+  },
+
+  insertAttempt: async (attempt: PracticeAttempt): Promise<void> => {
+    const db = getDb()
+    db.attempts = db.attempts || []
+    db.attempts.push(attempt)
     saveDb(db)
   },
 }

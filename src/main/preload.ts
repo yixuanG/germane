@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { Article, MistakeRecord } from '../shared/types.js'
+import type { Article, MistakeRecord, PracticeAttempt } from '../shared/types.js'
 
 export interface Api {
   db: {
@@ -13,6 +13,8 @@ export interface Api {
     insertMistakes: (mistakes: MistakeRecord[]) => Promise<void>
     deleteMistake: (id: string) => Promise<void>
     markMistakeReviewed: (id: string) => Promise<void>
+    getAttempts: () => Promise<PracticeAttempt[]>
+    insertAttempt: (attempt: PracticeAttempt) => Promise<void>
   }
   window: {
     minimize: () => Promise<void>
@@ -33,6 +35,8 @@ const api: Api = {
     insertMistakes: (mistakes: MistakeRecord[]) => ipcRenderer.invoke('db:insertMistakes', mistakes),
     deleteMistake: (id: string) => ipcRenderer.invoke('db:deleteMistake', id),
     markMistakeReviewed: (id: string) => ipcRenderer.invoke('db:markMistakeReviewed', id),
+    getAttempts: () => ipcRenderer.invoke('db:getAttempts'),
+    insertAttempt: (attempt: PracticeAttempt) => ipcRenderer.invoke('db:insertAttempt', attempt),
   },
   window: {
     minimize: () => ipcRenderer.invoke('window:minimize'),

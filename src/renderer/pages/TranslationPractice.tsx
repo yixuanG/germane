@@ -5,11 +5,13 @@ import { ArrowLeft, CheckCircle2, Keyboard, Languages, Sparkles } from 'lucide-r
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { getTranslationTopicById, normalizeLanguage } from '@/lib/translationPractice'
+import { useDatabase } from '@/hooks/useDatabase'
 
 const TranslationPractice: React.FC = () => {
   const { t, i18n } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { insertAttempt } = useDatabase()
   const language = normalizeLanguage(i18n.language)
   const topic = useMemo(() => (id ? getTranslationTopicById(id) : undefined), [id])
   const firstTextareaRef = useRef<HTMLTextAreaElement>(null)
@@ -24,9 +26,20 @@ const TranslationPractice: React.FC = () => {
 
   const progress = topic ? Math.round((answeredCount / topic.prompts.length) * 100) : 0
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
+    if (!topic) return
+
+    await insertAttempt({
+      id: `attempt-${Date.now()}-${topic.id}`,
+      practiceType: 'translation',
+      exerciseId: topic.id,
+      exerciseTitle: topic.title.de,
+      answeredCount,
+      totalCount: topic.prompts.length,
+      completedAt: Date.now(),
+    })
     setIsSubmitted(true)
-  }, [])
+  }, [answeredCount, insertAttempt, topic])
 
   const focusNextTextarea = useCallback(() => {
     const textareas = Array.from(
@@ -46,7 +59,7 @@ const TranslationPractice: React.FC = () => {
       if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
         event.preventDefault()
         if (!isSubmitted) {
-          handleSubmit()
+          void handleSubmit()
         }
       }
 
@@ -184,7 +197,7 @@ const TranslationPractice: React.FC = () => {
             <span className="text-muted">·</span>
             <span><span className="font-mono text-primary">Esc</span> {t('translationPractice.shortcutBack')}</span>
           </div>
-          <Button onClick={handleSubmit} size="lg">
+          <Button onClick={() => void handleSubmit()} size="lg">
             {t('translationPractice.submit')}
           </Button>
         </div>

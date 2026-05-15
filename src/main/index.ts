@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { Database } from './database.js'
-import type { Article, MistakeRecord } from '../shared/types.js'
+import type { Article, MistakeRecord, PracticeAttempt } from '../shared/types.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -81,6 +81,14 @@ ipcMain.handle('db:deleteMistake', async (_event, id: string) => {
 
 ipcMain.handle('db:markMistakeReviewed', async (_event, id: string) => {
   await db.markMistakeReviewed(id)
+})
+
+ipcMain.handle('db:getAttempts', async () => {
+  return await db.getAttempts()
+})
+
+ipcMain.handle('db:insertAttempt', async (_event, attempt: PracticeAttempt) => {
+  await db.insertAttempt(attempt)
 })
 
 // Window control IPC handlers

@@ -1,7 +1,7 @@
 import { Low } from 'lowdb'
 import { JSONFile } from 'lowdb/node'
 import path from 'path'
-import type { DatabaseSchema, Article, MistakeRecord } from '../shared/types.js'
+import type { DatabaseSchema, Article, MistakeRecord, PracticeAttempt } from '../shared/types.js'
 
 // Determine the user data directory based on platform
 const getUserDataPath = (): string => {
@@ -16,6 +16,7 @@ const getUserDataPath = (): string => {
 const defaultData: DatabaseSchema = {
   articles: [],
   mistakes: [],
+  attempts: [],
 }
 
 export class Database {
@@ -38,6 +39,9 @@ export class Database {
     }
     if (!this.db.data.mistakes) {
       this.db.data.mistakes = []
+    }
+    if (!this.db.data.attempts) {
+      this.db.data.attempts = []
     }
     await this.db.write()
   }
@@ -99,6 +103,17 @@ export class Database {
     if (mistake) {
       mistake.reviewedAt = Date.now()
     }
+    await this.db.write()
+  }
+
+  async getAttempts(): Promise<PracticeAttempt[]> {
+    await this.db.read()
+    return this.db.data!.attempts
+  }
+
+  async insertAttempt(attempt: PracticeAttempt): Promise<void> {
+    await this.db.read()
+    this.db.data!.attempts.push(attempt)
     await this.db.write()
   }
 }

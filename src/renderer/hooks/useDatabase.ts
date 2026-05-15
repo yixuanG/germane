@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useAppStore } from '@/stores/useAppStore'
-import type { Article, MistakeRecord } from '@shared/types'
+import type { Article, MistakeRecord, PracticeAttempt } from '@shared/types'
 import { browserDb } from '@/lib/browserDatabase'
 
 // Check if we're running in Electron
@@ -17,9 +17,11 @@ export function useDatabase() {
   const {
     setArticles,
     setMistakes,
+    setAttempts,
     addMistake,
     removeMistake,
     markMistakeReviewed,
+    addAttempt,
     setIsLoading,
   } = useAppStore()
 
@@ -109,6 +111,24 @@ export function useDatabase() {
     }
   }, [markMistakeReviewed])
 
+  const loadAttempts = useCallback(async () => {
+    try {
+      const attempts = await db.getAttempts()
+      setAttempts(attempts)
+    } catch (error) {
+      console.error('Failed to load attempts:', error)
+    }
+  }, [setAttempts])
+
+  const insertAttempt = useCallback(async (attempt: PracticeAttempt) => {
+    try {
+      await db.insertAttempt(attempt)
+      addAttempt(attempt)
+    } catch (error) {
+      console.error('Failed to insert attempt:', error)
+    }
+  }, [addAttempt])
+
   return {
     loadArticles,
     loadArticleById,
@@ -119,5 +139,7 @@ export function useDatabase() {
     insertMistakes,
     deleteMistake,
     markAsReviewed,
+    loadAttempts,
+    insertAttempt,
   }
 }

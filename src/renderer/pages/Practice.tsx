@@ -14,7 +14,7 @@ const Practice: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { setCurrentArticle } = useAppStore()
-  const { loadArticleById, insertMistakes } = useDatabase()
+  const { loadArticleById, insertMistakes, insertAttempt } = useDatabase()
 
   const [article, setArticle] = useState<Article | null>(null)
   const [correctBlanks, setCorrectBlanks] = useState<Set<string>>(new Set())
@@ -106,8 +106,20 @@ const Practice: React.FC = () => {
       await insertMistakes(mistakes)
     }
 
+    await insertAttempt({
+      id: `attempt-${Date.now()}-${article.id}`,
+      practiceType: 'past-tense',
+      exerciseId: article.id,
+      exerciseTitle: article.title,
+      correctCount: correctBlanks.size,
+      answeredCount: userAnswers.size,
+      totalCount: allBlanks.length,
+      scorePercent: allBlanks.length > 0 ? Math.round((correctBlanks.size / allBlanks.length) * 100) : 0,
+      completedAt: Date.now(),
+    })
+
     setShowResult(true)
-  }, [article, allBlanks, correctBlanks, insertMistakes, reconstructSentence, userAnswers])
+  }, [article, allBlanks, correctBlanks, insertAttempt, insertMistakes, reconstructSentence, userAnswers])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

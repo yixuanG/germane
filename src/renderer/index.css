@@ -9,6 +9,15 @@
 
   html {
     color-scheme: dark;
+    font-size: 16px;
+  }
+
+  html[data-font-size='large'] {
+    font-size: 18px;
+  }
+
+  html[data-font-size='xlarge'] {
+    font-size: 20px;
   }
 
   body {

@@ -43,9 +43,24 @@ export interface MistakeRecord {
   reviewedAt?: number;
 }
 
+export type PracticeType = 'past-tense' | 'translation' | 'preposition';
+
+export interface PracticeAttempt {
+  id: string;
+  practiceType: PracticeType;
+  exerciseId: string;
+  exerciseTitle: string;
+  correctCount?: number;
+  answeredCount: number;
+  totalCount: number;
+  scorePercent?: number;
+  completedAt: number;
+}
+
 export interface DatabaseSchema {
   articles: Article[];
   mistakes: MistakeRecord[];
+  attempts: PracticeAttempt[];
 }
 
 export type SupportedLanguage = 'en' | 'de' | 'zh';
@@ -84,7 +99,7 @@ export type PrepositionTextKind = 'narrative' | 'expository' | 'argumentative';
 export interface PrepositionStory {
   id: string;
   title: string;
-  level: 'A2-B1' | 'B1' | 'B1-B2' | 'B2';
+  level: 'A2-B1' | 'B1' | 'B1-B2' | 'B2' | 'B2-C1';
   kind: PrepositionTextKind;
   description: string;
   focus: PrepositionCategory[];

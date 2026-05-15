@@ -11,6 +11,7 @@ import {
   getPrepositionStoryById,
 } from '@/lib/prepositionPractice'
 import type { PrepositionCategory } from '@shared/types'
+import { useDatabase } from '@/hooks/useDatabase'
 
 const categoryStyles: Record<PrepositionCategory, string> = {
   verb: 'border-accent-violet/25 bg-accent-violet/10 text-accent-violet',
@@ -22,6 +23,7 @@ const PrepositionPractice: React.FC = () => {
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { insertAttempt } = useDatabase()
 
   const story = useMemo(() => (id ? getPrepositionStoryById(id) : undefined), [id])
   const [correctBlanks, setCorrectBlanks] = useState<Set<string>>(new Set())
@@ -52,9 +54,22 @@ const PrepositionPractice: React.FC = () => {
     })
   }, [])
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
+    if (!story) return
+
+    await insertAttempt({
+      id: `attempt-${Date.now()}-${story.id}`,
+      practiceType: 'preposition',
+      exerciseId: story.id,
+      exerciseTitle: story.title,
+      correctCount: correctBlanks.size,
+      answeredCount: userAnswers.size,
+      totalCount: allBlanks.length,
+      scorePercent: allBlanks.length > 0 ? Math.round((correctBlanks.size / allBlanks.length) * 100) : 0,
+      completedAt: Date.now(),
+    })
     setIsSubmitted(true)
-  }, [])
+  }, [allBlanks.length, correctBlanks.size, insertAttempt, story, userAnswers.size])
 
   const focusNextInput = useCallback(() => {
     const inputs = Array.from(
@@ -71,7 +86,7 @@ const PrepositionPractice: React.FC = () => {
       if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
         event.preventDefault()
         if (!isSubmitted) {
-          handleSubmit()
+          void handleSubmit()
         }
       }
 
@@ -197,7 +212,7 @@ const PrepositionPractice: React.FC = () => {
             <span className="text-muted">·</span>
             <span><span className="font-mono text-primary">Esc</span> {t('prepositionPractice.shortcutBack')}</span>
           </div>
-          <Button onClick={handleSubmit} size="lg">
+          <Button onClick={() => void handleSubmit()} size="lg">
             {t('prepositionPractice.submit')}
           </Button>
         </div>

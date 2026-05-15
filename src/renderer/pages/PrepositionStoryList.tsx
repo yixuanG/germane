@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, Compass, FileText, Link2, MapPinned } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Compass, FileText, Link2, MapPinned, SlidersHorizontal } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   countPrepositionBlanksByCategory,
+  getPrepositionBlanks,
   prepositionStories,
 } from '@/lib/prepositionPractice'
 import type { PrepositionCategory, PrepositionTextKind } from '@shared/types'
+import { useAppStore } from '@/stores/useAppStore'
+import { useDatabase } from '@/hooks/useDatabase'
+import { formatAttemptDate, getLatestAttempt } from '@/lib/practiceAttempts'
 
 const categoryStyles: Record<PrepositionCategory, string> = {
   verb: 'border-accent-violet/25 bg-accent-violet/10 text-accent-violet',
@@ -24,6 +29,55 @@ const kindIcons: Record<PrepositionTextKind, React.ElementType> = {
 const PrepositionStoryList: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { attempts } = useAppStore()
+  const { loadAttempts } = useDatabase()
+  const [selectedLevel, setSelectedLevel] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState<'all' | PrepositionCategory>('all')
+  const [selectedPattern, setSelectedPattern] = useState('all')
+
+  useEffect(() => {
+    loadAttempts()
+  }, [loadAttempts])
+
+  const levels = useMemo(
+    () => ['all', ...Array.from(new Set(prepositionStories.map((story) => story.level)))],
+    []
+  )
+
+  const patterns = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          prepositionStories.flatMap((story) =>
+            getPrepositionBlanks(story)
+              .map((blank) => blank.hint)
+              .filter((hint) => !hint.startsWith('wo') && !hint.startsWith('Richtung:'))
+          )
+        )
+      ).sort((left, right) => left.localeCompare(right, 'de')),
+    []
+  )
+
+  const filteredStories = useMemo(
+    () =>
+      prepositionStories.filter((story) => {
+        const blanks = getPrepositionBlanks(story)
+        const matchesLevel = selectedLevel === 'all' || story.level === selectedLevel
+        const matchesCategory =
+          selectedCategory === 'all' || blanks.some((blank) => blank.category === selectedCategory)
+        const matchesPattern =
+          selectedPattern === 'all' || blanks.some((blank) => blank.hint === selectedPattern)
+
+        return matchesLevel && matchesCategory && matchesPattern
+      }),
+    [selectedCategory, selectedLevel, selectedPattern]
+  )
+
+  const clearFilters = () => {
+    setSelectedLevel('all')
+    setSelectedCategory('all')
+    setSelectedPattern('all')
+  }
 
   return (
     <div className="px-8 py-10 max-w-6xl mx-auto">
@@ -39,10 +93,82 @@ const PrepositionStoryList: React.FC = () => {
         </p>
       </div>
 
+      <Card className="mb-6 bg-surface/70">
+        <CardHeader className="gap-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <CardTitle className="flex items-center gap-2 text-2xl">
+              <SlidersHorizontal className="h-5 w-5 text-accent-cyan" />
+              {t('prepositionPractice.filters.title')}
+            </CardTitle>
+            <Button variant="ghost" onClick={clearFilters}>
+              {t('prepositionPractice.filters.clear')}
+            </Button>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-[1fr_1fr_1.35fr]">
+            <label className="space-y-2">
+              <span className="block text-sm font-mono uppercase tracking-[0.16em] text-muted">
+                {t('prepositionPractice.filters.level')}
+              </span>
+              <select
+                value={selectedLevel}
+                onChange={(event) => setSelectedLevel(event.target.value)}
+                className="w-full rounded-2xl border border-line bg-elevated px-4 py-3 text-primary outline-none transition focus:border-accent-cyan/60"
+              >
+                {levels.map((level) => (
+                  <option key={level} value={level}>
+                    {level === 'all' ? t('prepositionPractice.filters.allLevels') : level}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="space-y-2">
+              <span className="block text-sm font-mono uppercase tracking-[0.16em] text-muted">
+                {t('prepositionPractice.filters.category')}
+              </span>
+              <select
+                value={selectedCategory}
+                onChange={(event) => setSelectedCategory(event.target.value as 'all' | PrepositionCategory)}
+                className="w-full rounded-2xl border border-line bg-elevated px-4 py-3 text-primary outline-none transition focus:border-accent-cyan/60"
+              >
+                <option value="all">{t('prepositionPractice.filters.allCategories')}</option>
+                <option value="verb">{t('prepositionPractice.category.verb')}</option>
+                <option value="location">{t('prepositionPractice.category.location')}</option>
+                <option value="noun">{t('prepositionPractice.category.noun')}</option>
+              </select>
+            </label>
+
+            <label className="space-y-2">
+              <span className="block text-sm font-mono uppercase tracking-[0.16em] text-muted">
+                {t('prepositionPractice.filters.pattern')}
+              </span>
+              <select
+                value={selectedPattern}
+                onChange={(event) => setSelectedPattern(event.target.value)}
+                className="w-full rounded-2xl border border-line bg-elevated px-4 py-3 text-primary outline-none transition focus:border-accent-cyan/60"
+              >
+                <option value="all">{t('prepositionPractice.filters.allPatterns')}</option>
+                {patterns.map((pattern) => (
+                  <option key={pattern} value={pattern}>
+                    {pattern}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+
+          <p className="text-sm text-secondary">
+            {t('prepositionPractice.filters.results', { count: filteredStories.length })}
+          </p>
+        </CardHeader>
+      </Card>
+
       <div className="grid gap-5">
-        {prepositionStories.map((story) => {
+        {filteredStories.map((story) => {
           const counts = countPrepositionBlanksByCategory(story)
           const KindIcon = kindIcons[story.kind]
+          const attempt = getLatestAttempt(attempts, 'preposition', story.id)
 
           return (
             <Card
@@ -79,6 +205,15 @@ const PrepositionStoryList: React.FC = () => {
                         </span>
                       ))}
                     </div>
+                    <p className={`mt-4 flex items-center gap-2 text-sm ${attempt ? 'text-accent-green' : 'text-muted'}`}>
+                      {attempt && <CheckCircle2 className="h-4 w-4" />}
+                      {attempt
+                        ? t('practiceHistory.completedWithScore', {
+                            score: attempt.scorePercent ?? 0,
+                            date: formatAttemptDate(attempt.completedAt),
+                          })
+                        : t('practiceHistory.notAttempted')}
+                    </p>
                   </div>
                 </div>
                 <ArrowRight className="w-5 h-5 shrink-0 text-muted transition-all group-hover:translate-x-1 group-hover:text-accent-cyan" />

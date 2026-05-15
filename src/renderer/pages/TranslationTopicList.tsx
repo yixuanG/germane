@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, Languages, Scale } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Languages, Scale } from 'lucide-react'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { translationTopics, normalizeLanguage } from '@/lib/translationPractice'
+import { useDatabase } from '@/hooks/useDatabase'
+import { useAppStore } from '@/stores/useAppStore'
+import { getLatestAttempt, formatAttemptDate } from '@/lib/practiceAttempts'
 
 const TranslationTopicList: React.FC = () => {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const language = normalizeLanguage(i18n.language)
+  const { attempts } = useAppStore()
+  const { loadAttempts } = useDatabase()
+
+  useEffect(() => {
+    loadAttempts()
+  }, [loadAttempts])
 
   return (
     <div className="px-8 py-10 max-w-6xl mx-auto">
@@ -25,7 +34,10 @@ const TranslationTopicList: React.FC = () => {
       </div>
 
       <div className="grid gap-5">
-        {translationTopics.map((topic) => (
+        {translationTopics.map((topic) => {
+          const attempt = getLatestAttempt(attempts, 'translation', topic.id)
+
+          return (
           <Card
             key={topic.id}
             className="group cursor-pointer overflow-hidden transition-all hover:-translate-y-0.5 hover:border-accent-violet/25 hover:bg-elevated"
@@ -55,12 +67,22 @@ const TranslationTopicList: React.FC = () => {
                       {topic.prompts.length} {t('translationPractice.viewpoints')}
                     </span>
                   </div>
+                  <p className={`mt-4 flex items-center gap-2 text-sm ${attempt ? 'text-accent-green' : 'text-muted'}`}>
+                    {attempt && <CheckCircle2 className="h-4 w-4" />}
+                    {attempt
+                      ? t('practiceHistory.completedWithProgress', {
+                          answered: attempt.answeredCount,
+                          total: attempt.totalCount,
+                          date: formatAttemptDate(attempt.completedAt),
+                        })
+                      : t('practiceHistory.notAttempted')}
+                  </p>
                 </div>
               </div>
               <ArrowRight className="w-5 h-5 shrink-0 text-muted transition-all group-hover:translate-x-1 group-hover:text-accent-violet" />
             </CardHeader>
           </Card>
-        ))}
+        )})}
       </div>
     </div>
   )

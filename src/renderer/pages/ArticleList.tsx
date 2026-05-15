@@ -1,22 +1,24 @@
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, BookOpen, Database } from 'lucide-react'
+import { ArrowRight, BookOpen, CheckCircle2, Database } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useAppStore } from '@/stores/useAppStore'
 import { useDatabase } from '@/hooks/useDatabase'
 import { browserDb } from '@/lib/browserDatabase'
+import { getLatestAttempt, formatAttemptDate } from '@/lib/practiceAttempts'
 
 const ArticleList: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { articles, isLoading } = useAppStore()
-  const { loadArticles, insertArticles, clearArticles } = useDatabase()
+  const { articles, attempts, isLoading } = useAppStore()
+  const { loadArticles, insertArticles, clearArticles, loadAttempts } = useDatabase()
 
   useEffect(() => {
     loadArticles()
-  }, [loadArticles])
+    loadAttempts()
+  }, [loadArticles, loadAttempts])
 
   const handleSeedDatabase = async () => {
     const seedData = await browserDb.getArticles()
@@ -72,7 +74,10 @@ const ArticleList: React.FC = () => {
         </Card>
       ) : (
         <div className="grid gap-4">
-          {articles.map((article) => (
+          {articles.map((article) => {
+            const attempt = getLatestAttempt(attempts, 'past-tense', article.id)
+
+            return (
             <Card
               key={article.id}
               className="group cursor-pointer overflow-hidden transition-all hover:-translate-y-0.5 hover:border-accent-green/20 hover:bg-elevated"
@@ -88,6 +93,15 @@ const ArticleList: React.FC = () => {
                       {article.title}
                     </CardTitle>
                     <CardDescription className="mt-2 text-base">{article.topic}</CardDescription>
+                    <p className={`mt-3 flex items-center gap-2 text-sm ${attempt ? 'text-accent-green' : 'text-muted'}`}>
+                      {attempt && <CheckCircle2 className="h-4 w-4" />}
+                      {attempt
+                        ? t('practiceHistory.completedWithScore', {
+                            score: attempt.scorePercent ?? 0,
+                            date: formatAttemptDate(attempt.completedAt),
+                          })
+                        : t('practiceHistory.notAttempted')}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -102,7 +116,7 @@ const ArticleList: React.FC = () => {
                 </div>
               </CardHeader>
             </Card>
-          ))}
+          )})}
         </div>
       )}
     </div>
